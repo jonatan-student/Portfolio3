@@ -26,10 +26,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Controller control = new Controller();
         View view = new View(control);
-
         control.setView(view);
         stage.setTitle("School DataBase Browser");
-        stage.setScene(new Scene(view.asParent(), 750, 500, Color.WHEAT));
+        stage.setScene(new Scene(view.asParent(), 750, 500));
         stage.show();
     }
 }
