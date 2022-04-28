@@ -1,39 +1,35 @@
 package com.company;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Screen;
+import javafx.scene.control.Button;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.util.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import javax.swing.*;
+
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        String url = "jdbc:sqlite:StudentsDB.db"; // Making a string path to the SQL Database
-        // Instantializing our classes:
-        Model Db =   new Model(url);
-        Controller  control =   new Controller(Db);
-        View view    =   new View(control);  //,primaryStage);
-
-        // JavaFX setup
-        control.setView(view);
-        Stage.setTitle("Student Course Administration");
-        Stage.setScene(new Scene(view.asParent(), 600, 450));
-        Stage.show();
-        Stage.setResizable(false);
-
-    }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Controller control = new Controller();
+        View view = new View(control);
+
+        control.setView(view);
+        stage.setTitle("School DataBase Browser");
+        stage.setScene(new Scene(view.asParent(), 750, 500, Color.WHEAT));
+        stage.show();
     }
 }
