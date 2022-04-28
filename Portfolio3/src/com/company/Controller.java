@@ -25,16 +25,19 @@ public class Controller {
     }
 
     public void coursesSwitch(){
+        this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
-
+        this.view.DisplayInfo.setVisible(true);
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
-
+        this.view.DisplayInfo.appendText("All Courses \n------------");
     }
 
     public void HomeSwitch(){
+        this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(false);
+        this.view.DisplayInfo.setVisible(false);
         this.view.StudentsBtn.setVisible(true);
         this.view.TeachersBtn.setVisible(true);
         this.view.CoursesBtn.setVisible(true);
@@ -42,16 +45,22 @@ public class Controller {
     }
 
     public void StudentsSwitch(){
+        this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
+        this.view.DisplayInfo.setVisible(true);
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
+        this.view.DisplayInfo.appendText("All Students \n------------");
     }
 
     public void TeachersSwitch(){
+        this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
+        this.view.DisplayInfo.setVisible(true);
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
+        this.view.DisplayInfo.appendText("All Teachers \n----------");
     }
 }
