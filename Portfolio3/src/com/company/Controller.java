@@ -180,8 +180,20 @@ public class Controller {
 
     private void getCourseInfo(){
         String Course = this.view.Info.getValue();
+        String students = "";
+        String teachers = "";
+        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(Course);
 
-        String toDisplay = "Course Name: " + Course;
+        for (String s: People) {
+            if(this.model.getOccupationWithID(s) == "Professor"){
+                teachers += this.model.getNameWithID(s);
+            } else if (this.model.getOccupationWithID(s) == "Student"){
+                students += this.model.getNameWithID(s);
+            }
+
+        }
+
+        String toDisplay = "Course Name: " + Course + "\n Enrolled Students" + students;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
