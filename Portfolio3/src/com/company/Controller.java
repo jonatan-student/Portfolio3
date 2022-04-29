@@ -9,8 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
-import javax.swing.*;
+import java.util.*;
 import java.util.ArrayList;
 
 public class Controller {
@@ -46,10 +45,10 @@ public class Controller {
                 getStudentInfo();
                 break;
             case "Teachers":
-                getTeacherInfo();
+                //getTeacherInfo();
                 break;
             case "Courses":
-                //getCourseInfo();
+                getCourseInfo();
                 break;
         }
     }
@@ -173,29 +172,35 @@ public class Controller {
             }
             Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
         }
-        String toDisplay = "Teacher Name: " + Teacher + "\nIs Teaching Course(s): \n" + courses + Warning;
+        String toDisplay = "Student Name: " + Teacher + "\nCurrent Courses: \n" + courses + Warning;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
 
-//    private void getCourseInfo(){
-//        String Course = this.view.Info.getValue();
-//        String students = "";
-//        String teachers = "";
-//        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.);
-//        ArrayList<String> Course = this.model.getAllCourseStuffWithID(this.model.);
-//
-//        for (String s: People) {
-//            if(this.model.getOccupationWithID(s).contains("Professor")){
-//                teachers += this.model.getNameWithID(s);
-//            } else if (this.model.getOccupationWithID(s).contains("Student")){
-//                students += this.model.getNameWithID(s);
-//            }
-//        }
-//
-//        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+teachers+"\nEnrolled Students\n" + students;
-//        this.view.DisplayInfo.appendText(toDisplay);
-//    }
+    private void getCourseInfo(){
+        String Course = this.view.Info.getValue();
+        String students = "";
+        String teachers = "";
+        String Warning = "\n";
+        String Studentcount =""; int studentcount = 0;
+        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.getCourseIDWithName(Course).get(0));
+        String info = this.model.getAllCourseStuffWithID(model.getCourseIDWithName(Course).get(0)).get(4);
+        for (String s: People) {
+            if(this.model.getOccupationWithID(s).contains("Professor")){
+                teachers += this.model.getNameWithID(s)+ "\n";
+            } else if (this.model.getOccupationWithID(s).contains("Student")){
+                students += this.model.getNameWithID(s) +"\n";
+                studentcount++;
+            }
+        }
+        Studentcount += studentcount;
+       if (this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(4).contains(Studentcount)){
+           Warning = "\n\n\n---<OVER STUDENT CAPACITY>----\n\n";
+       }
+
+        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+ teachers +"\nEnrolled Students:\n----------\n" + students + Warning + "\nLocated in Room #"+ this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(2)+ "\n" + info;
+        this.view.DisplayInfo.appendText(toDisplay);
+    }
 
     public String time(String Block){
         String tid = "";
