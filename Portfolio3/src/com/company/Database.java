@@ -4,11 +4,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    // Private variables for connector and database
+    // creates variables for the connection as well as the database
     private Connection conn = null;
     private String db = null;
 
-    // Init with test connection
+    // Connecting to the database, using the call and url from Main
     public Database(String database) {
         System.out.println("Attempting connect to database at: " + database);
         try {
@@ -20,13 +20,14 @@ public class Database {
         }
     }
 
+    //actual connect ;)
     private void connect(String database) throws SQLException {
         conn = DriverManager.getConnection(database);
         db = database;
         System.out.println("Database Connected Successfully!");
     }
 
-    // Default method using internal database
+    // Issue with connecting message
     private void connect() throws SQLException {
         if (db != null) {
             connect(db);
@@ -35,6 +36,7 @@ public class Database {
         }
     }
 
+    //method to end a connection from the database
     public void endConnection()
     {
         if (conn != null) {
@@ -46,6 +48,7 @@ public class Database {
         }
     }
 
+    //initial query using SQLite commands in Strings that are given to the database to retrieve either an array list or string back
     private ResultSet query(String Query) throws SQLException
     {
         connect();
@@ -53,65 +56,27 @@ public class Database {
         return stmt.executeQuery(Query);
     }
 
-    public ArrayList<String> getRegistrationCourseID()
-    {
-        ArrayList<String> result = new ArrayList<String>();
-        try
-        {
-            ResultSet rs = query("SELECT Course_ID FROM Registration");
-            while(rs.next())
-            {
-                String CourseRegID = rs.getString("Course_ID");
-                result.add(CourseRegID);
-                System.out.println(CourseRegID);
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            endConnection();
-        }
-        return result;
-    }
+    //ALL USED METHODS FOR GETTING INFO FROM DATABASE BELOW
+    //MOST NAMES FOR THE METHODS ARE SELF EXPLANATORY
+    //SO ONLY FIRST FUNCTION IS COMMENTED FOR NEEDED UNDERSTANDING
 
-    public ArrayList<String> getCourseID()
-    {
-        ArrayList<String> result = new ArrayList<String>();
-        try
-        {
-            ResultSet rs = query("SELECT Course_ID FROM Courses");
-            while(rs.next())
-            {
-                String CourseID = rs.getString("Course_ID");
-                result.add(CourseID);
-                System.out.println(CourseID);
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            endConnection();
-        }
-        return result;
-    }
-
+    //method to receive all course names from Database
     public ArrayList<String> getCourseName()
     {
+        //create an ArrayList named result
         ArrayList<String> result = new ArrayList<String>();
         try
         {
+            //use the query method to send the SQLite command to retrieve information
             ResultSet rs = query("SELECT Course_Name FROM Courses");
             while(rs.next())
             {
+                //stores the desired column from the table and then adds it to the ArrayList that is returned
                 String courseName = rs.getString("Course_Name");
                 result.add(courseName);
-                System.out.println(courseName);
+                //System.out.println(courseName);   <---- Was used initially for testing to make sure desired output was recieved
             }
-        }
+        } //if SQLite does not receive proper command then ends
         catch (SQLException e)
         {
             e.printStackTrace();
@@ -122,95 +87,7 @@ public class Database {
         return result;
     }
 
-    public ArrayList<String> getTimeBlock()
-    {
-        ArrayList<String> result = new ArrayList<String>();
-        try
-        {
-            ResultSet rs = query("SELECT Day_Time FROM Courses");
-            while(rs.next())
-            {
-                String dayTime = rs.getString("Day_Time");
-                result.add(dayTime);
-                System.out.println(dayTime);
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            endConnection();
-        }
-        return result;
-    }
-
-    public ArrayList<String> getCourseRooms()
-    {
-        ArrayList<String> result = new ArrayList<String>();
-        try
-        {
-            ResultSet rs = query("SELECT Rooms FROM Courses");
-            while(rs.next())
-            {
-                String courseRooms = rs.getString("Rooms");
-                result.add(courseRooms);
-                System.out.println(courseRooms);
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            endConnection();
-        }
-        return result;
-    }
-
-    public ArrayList<String> getCourseMaxStudents()
-    {
-        ArrayList<String> result = new ArrayList<String>();
-        try
-        {
-            ResultSet rs = query("SELECT Max_Students FROM Courses");
-            while(rs.next())
-            {
-                String maxStudents = rs.getString("Max_Students");
-                result.add(maxStudents);
-                System.out.println(maxStudents);
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        } finally
-        {
-            endConnection();
-        }
-        return result;
-    }
-
-    public ArrayList<String> getCourseInfo()
-    {
-        ArrayList<String> result = new ArrayList<String>();
-        try
-        {
-            ResultSet rs = query("SELECT Info FROM Courses");
-            while(rs.next())
-            {
-                String courseInfo = rs.getString("Info");
-                result.add(courseInfo);
-                System.out.println(courseInfo);
-            }
-        }
-        catch (SQLException e)
-        {
-            endConnection();
-        }
-        return result;
-    }
-
+    //Get Names using an ID
     public String getNameWithID(String ID)
     {
         String result = "";
@@ -231,6 +108,7 @@ public class Database {
         return result;
     }
 
+    //Get names using their Occupation
     public ArrayList<String> getNamesWithOccupation(String occupation)
     {
         ArrayList<String> result = new ArrayList<String>();
@@ -254,6 +132,7 @@ public class Database {
         return result;
     }
 
+    //Get Registered course IDs using a persons ID
     public ArrayList<String> getRegCourseIDsWithPeopleID(String peopleID)
     {
         ArrayList<String> result = new ArrayList<String>();
@@ -277,6 +156,7 @@ public class Database {
         return result;
     }
 
+    //Get registered peoples IDs using a Course ID
     public ArrayList<String> getRegPeopleIDsWithCourseID(String courseID)
     {
         ArrayList<String> result = new ArrayList<String>();
@@ -300,6 +180,7 @@ public class Database {
         return result;
     }
 
+    //Get an ID by asking for a name
     public String getIDUsingName(String name) {
         String result = "";
         try {
@@ -316,6 +197,7 @@ public class Database {
 
     }
 
+    //Get all information inside a course using Peoples IDs
     public ArrayList<String> getAllCourseStuffWithID(String courseID)
     {
         ArrayList<String> result = new ArrayList<String>();
@@ -347,6 +229,7 @@ public class Database {
         return result;
     }
 
+    //Get occupation using a persons ID
     public ArrayList<String> getOccupationWithID(String peopleID)
     {
         ArrayList<String> result = new ArrayList<String>();
@@ -370,6 +253,7 @@ public class Database {
         return result;
     }
 
+    //Get a course ID from a name
     public ArrayList<String> getCourseIDWithName(String courseName)
     {
         ArrayList<String> result = new ArrayList<String>();
