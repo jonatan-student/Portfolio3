@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Controller {
@@ -141,20 +142,25 @@ public class Controller {
     }
 
     private void getStudentInfo() {
-
         String Student = this.view.Info.getValue();
         ArrayList<String> Courses = this.model.getRegCourseIDsWithPeopleID(this.model.getIDUsingName(Student));
+        ArrayList<String> Schedule = new ArrayList<>();
         String courses = "";
+        String Warning = "";
         for (String s: Courses) {
-            courses += "--> " + s + "\n";
+            courses += "--> " + this.model.getAllCourseStuffWithID(s).get(0) + "---" + time(this.model.getAllCourseStuffWithID(s).get(1));
+            courses += "\nRoom #" + this.model.getAllCourseStuffWithID(s).get(2) + "\n";
+            if(Schedule.contains(this.model.getAllCourseStuffWithID(s).get(1))){
+                Warning = "\n\n\n---<OVERBOOKING DETECTED>----\n\n";
+            }
+            Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
         }
-        String toDisplay = "Student Name: " + Student + "\n Current Courses: \n" + courses;
+        String toDisplay = "Student Name: " + Student + "\nCurrent Courses: \n" + courses + Warning;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
     private void getTeacherInfo(){
         String Teacher = this.view.Info.getValue();
-
         String toDisplay = "Teacher Name: " + Teacher;
         this.view.DisplayInfo.appendText(toDisplay);
     }
@@ -164,5 +170,15 @@ public class Controller {
 
         String toDisplay = "Course Name: " + Course;
         this.view.DisplayInfo.appendText(toDisplay);
+    }
+
+    public String time(String Block){
+        String tid = "";
+        if(Block.contains("A"))return  "Monday 8-12 and Tuesday 12-16";
+        if(Block.contains("B"))return  "Monday 12-16 and Friday 12-16";
+        if(Block.contains("C"))return  "Tuesday 8-12 and Thursday 8-12";
+        if(Block.contains("D"))return "Wednesday 8-12 and Friday 8-12";
+        if(Block.contains("E"))return "Wednesday 12-16 and Thursday 12-16";
+        else return null;
     }
 }
