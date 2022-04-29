@@ -45,7 +45,7 @@ public class Controller {
                 getStudentInfo();
                 break;
             case "Teachers":
-                //getTeacherInfo();
+                getTeacherInfo();
                 break;
             case "Courses":
                 getCourseInfo();
@@ -172,7 +172,7 @@ public class Controller {
             }
             Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
         }
-        String toDisplay = "Student Name: " + Teacher + "\nCurrent Courses: \n" + courses + Warning;
+        String toDisplay = "Teacher Name: " + Teacher + "\nIs Teaching Course(s): \n" + courses + Warning;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
