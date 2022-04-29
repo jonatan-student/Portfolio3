@@ -1,4 +1,4 @@
-package application.portfolio_3;
+package com.company;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Database {
         return stmt.executeQuery(Query);
     }
 
-    public ArrayList<String> getName()
+    public ArrayList<String> getNames()
     {
         ArrayList<String> result = new ArrayList<String>();
         try

@@ -53,7 +53,11 @@ public class View {
         StudentsBtn.setFont(font);
 
         HomeBtn.relocate(22.5,22.5);
-        Info.relocate(50, 22.5);
+
+        Info.relocate(100, 22.5);
+        Info.setMaxSize(200,500);
+        Info.setStyle("-fx-border-color:rgba(0,0,0); -fx-border-width:1px; -fx-background-color:rgba(245,222,179, 0.87);");
+
         DisplayInfo.relocate(20,50);
         DisplayInfo.setEditable(false);
         DisplayInfo.setMinSize(710,410);

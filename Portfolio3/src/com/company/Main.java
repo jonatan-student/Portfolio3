@@ -24,7 +24,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Controller control = new Controller();
+        String path = "jdbc:sqlite:SchoolScheduling.db";
+        Database db = new Database(path);
+        Controller control = new Controller(db);
         View view = new View(control);
         control.setView(view);
 

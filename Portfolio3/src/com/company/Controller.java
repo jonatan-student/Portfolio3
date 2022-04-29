@@ -1,5 +1,6 @@
 package com.company;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,11 +9,13 @@ import javafx.scene.control.Button;
 import java.util.ArrayList;
 
 public class Controller {
+    public Database model;
     public View view;
     public String CurrentScreen;
-    public ObservableList<String> info;
 
-    public Controller(){}
+    public Controller(Database db){
+        this.model = db;
+    }
 
     public void setView(View view) {
         this.view = view;
@@ -22,7 +25,7 @@ public class Controller {
         EventHandler<ActionEvent> HomeClicked = e-> HomeSwitch();
         EventHandler<ActionEvent> StudentsClicked = e-> StudentsSwitch();
         EventHandler<ActionEvent> TeachersClicked = e-> TeachersSwitch();
-        EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
+       // EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
 
         this.view.CoursesBtn.setOnAction(CoursesBtnClk);
         this.view.HomeBtn.setOnAction(HomeClicked);
@@ -30,22 +33,15 @@ public class Controller {
         this.view.TeachersBtn.setOnAction(TeachersClicked);
     }
 
-    private void InfoSwitch() {
 
-        if(CurrentScreen.contains("Students")){
-            info = getStudents();
-        } else if (CurrentScreen.contains("Teachers")){
-            info = getTeachers();
-        } else if (CurrentScreen.contains("Courses")){
-            info = getCourses();
-        }
-            this.view.Info.getItems().add(info);
-    }
-
-    private void setInfo(String type){
+    public void setInfo(String type){
         switch (type){
             case "Students":
-                info = getStudents();
+                this.view.Info.getItems().addAll(getStudents());
+                break;
+            case "Teachers":
+                this.view.Info.getItems().add(getTeachers());
+                break;
         }
     }
 
@@ -61,6 +57,7 @@ public class Controller {
 
     public void HomeSwitch(){
         this.view.DisplayInfo.clear();
+        this.view.Info.setVisible(false);
         this.view.HomeBtn.setVisible(false);
         this.view.DisplayInfo.setVisible(false);
         this.view.StudentsBtn.setVisible(true);
@@ -70,13 +67,15 @@ public class Controller {
     }
 
     public void StudentsSwitch(){
+        CurrentScreen = "Students";
         this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
         this.view.DisplayInfo.setVisible(true);
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
-        this.view.DisplayInfo.appendText("All Students \n------------");
+        this.view.Info.setVisible(true);
+        setInfo(CurrentScreen);
     }
 
     public void TeachersSwitch(){
@@ -86,12 +85,12 @@ public class Controller {
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
+        this.view.Info.setVisible(true);
         this.view.DisplayInfo.appendText("All Teachers \n----------");
     }
 
     public ObservableList<String> getStudents(){
-
-        return null;
+        return FXCollections.observableArrayList(this.model.getNames());
     }
 
     public ObservableList<String> getTeachers(){
