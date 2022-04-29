@@ -53,8 +53,6 @@ public class Database {
         return stmt.executeQuery(Query);
     }
 
-
-
     public ArrayList<String> getRegistrationCourseID()
     {
         ArrayList<String> result = new ArrayList<String>();
