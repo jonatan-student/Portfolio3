@@ -39,6 +39,9 @@ public class Controller {
             info = getCourses();
         }
             this.view.Info.getItems().add(info);
+    }
+
+    private void setInfo(String type){
 
     }
 
