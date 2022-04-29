@@ -198,7 +198,7 @@ public class Controller {
            Warning = "\n\n\n---<OVER STUDENT CAPACITY>----\n\n";
        }
 
-        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+ teachers +"\nEnrolled Students:\n----------\n" + students + Warning + "\nLocated in Room #"+ this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(2)+ "\n" + info;
+        String toDisplay = "Course Name: " + Course+ time(this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(1)) + "\nAssigned Teacher(s):"+ teachers +"\nEnrolled Students:\n----------\n" + students + "\nLocated in Room #"+ this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(2) + Warning+ "\n" + info;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
