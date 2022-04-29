@@ -2,12 +2,15 @@ package com.company;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+
+import java.util.ArrayList;
 
 public class Controller {
     public View view;
-    public Controller(){
+    public ArrayList<Button> InfoButtons = new ArrayList<>();
 
-    }
+    public Controller(){}
 
     public void setView(View view) {
         this.view = view;
@@ -21,7 +24,6 @@ public class Controller {
         this.view.HomeBtn.setOnAction(HomeClicked);
         this.view.StudentsBtn.setOnAction(StudentsClicked);
         this.view.TeachersBtn.setOnAction(TeachersClicked);
-
     }
 
     public void coursesSwitch(){
@@ -62,5 +64,18 @@ public class Controller {
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
         this.view.DisplayInfo.appendText("All Teachers \n----------");
+    }
+
+    public void setInfoButtons(ArrayList<String> info) {
+        int LineBreak = 0;
+        int xpos;
+        int ypos;
+        for (int i = 0 ; i<= info.size(); i++) {
+            if(i == 5*i){nextline+=20;}
+            Button infobtn = new Button(info.get(i));
+            infobtn.relocate(5+nextline, 55);
+            InfoButtons.add(infobtn);
+
+        }
     }
 }

@@ -8,8 +8,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 public class View {
@@ -22,7 +26,7 @@ public class View {
     Button StudentsBtn = new Button("Students");
 
     TextArea DisplayInfo = new TextArea();
-
+    ArrayList<Button> InfoButtons = new ArrayList<>();
 
 
     public View(Controller control){
@@ -35,13 +39,18 @@ public class View {
 
     public void Create(){
         this.view = new Pane();
+        Font font = Font.font("Comic Sans MS", FontWeight.BOLD, 36);
         this.view.setMinSize(750,500);
+        this.view.setStyle("-fx-border-color:rgba(0,0,0); -fx-border-width:20px; -fx-background-color:rgba(245,222,179, 0.87);");
 
-        CoursesBtn.relocate(375,250);
-        TeachersBtn.relocate(275, 250);
-        StudentsBtn.relocate(475, 250);
+        CoursesBtn.relocate(300,200);
+        CoursesBtn.setFont(font);
+        TeachersBtn.relocate(300, 50);
+        TeachersBtn.setFont(font);
+        StudentsBtn.relocate(300, 350);
+        StudentsBtn.setFont(font);
 
-        HomeBtn.relocate(20,10);
+        HomeBtn.relocate(22.5,22.5);
         DisplayInfo.relocate(20,50);
         DisplayInfo.setEditable(false);
         DisplayInfo.setMinSize(710,410);
