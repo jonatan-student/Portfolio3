@@ -9,8 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
-import javax.swing.*;
+import java.util.*;
 import java.util.ArrayList;
 
 public class Controller {
@@ -49,7 +48,7 @@ public class Controller {
                 //getTeacherInfo();
                 break;
             case "Courses":
-                //getCourseInfo();
+                getCourseInfo();
                 break;
         }
     }
@@ -182,18 +181,24 @@ public class Controller {
         String Course = this.view.Info.getValue();
         String students = "";
         String teachers = "";
-        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.);
-        ArrayList<String> Course = this.model.getAllCourseStuffWithID(this.model.);
-
+        String Warning = "\n";
+        String Studentcount =""; int studentcount = 0;
+        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.getCourseIDWithName(Course).get(0));
+        String info = this.model.getAllCourseStuffWithID(model.getCourseIDWithName(Course).get(0)).get(4);
         for (String s: People) {
             if(this.model.getOccupationWithID(s).contains("Professor")){
-                teachers += this.model.getNameWithID(s);
+                teachers += this.model.getNameWithID(s)+ "\n";
             } else if (this.model.getOccupationWithID(s).contains("Student")){
-                students += this.model.getNameWithID(s);
+                students += this.model.getNameWithID(s) +"\n";
+                studentcount++;
             }
         }
+        Studentcount += studentcount;
+       if (this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(4).contains(Studentcount)){
+           Warning = "\n\n\n---<OVER STUDENT CAPACITY>----\n\n";
+       }
 
-        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+teachers+"\nEnrolled Students\n" + students;
+        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+ teachers +"\nEnrolled Students:\n----------\n" + students + Warning + "\nLocated in Room #"+ this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(2)+ "\n" + info;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
