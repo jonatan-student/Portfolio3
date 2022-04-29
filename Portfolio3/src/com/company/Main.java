@@ -17,21 +17,22 @@ import javax.swing.*;
 
 public class Main extends Application {
 
-
+    //The Whole main method is as made to be as simple as possible
+    //JavaFx launches the program and initializes start method elsewhere
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        String path = "jdbc:sqlite:SchoolScheduling.db";
+    public void start(Stage stage) throws Exception { //The start method sets our database
+        String path = "jdbc:sqlite:SchoolScheduling.db";// the classes are initialized inorder of their dependencies
         Database db = new Database(path);
         Controller control = new Controller(db);
         View view = new View(control);
         control.setView(view);
 
 
-        stage.setTitle("School DataBase Browser");
+        stage.setTitle("School DataBase Browser"); //here we set the title and the initialize the popup visuals
         stage.setScene(new Scene(view.asParent(), 750, 500));
         stage.show();
     }

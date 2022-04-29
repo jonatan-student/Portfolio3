@@ -12,25 +12,31 @@ import javafx.scene.text.Text;
 import java.util.*;
 import java.util.ArrayList;
 
+///the Controller class handles everything what and when and how everything is presented
+///the class also handles our database and all the logic related to displaying given information at certain times
+
 public class Controller {
     public Database model;
     public View view;
     public String CurrentScreen;
 
-    public Controller(Database db){
+    public Controller(Database db){ //the constructor conects our database to our controller
         this.model = db;
     }
 
-    public void setView(View view) {
+
+    public void setView(View view) { //setView handles all the logic
         this.view = view;
         CurrentScreen = "Main";
 
+        //eventhandlers are initialized and set to functions below
         EventHandler<ActionEvent> CoursesBtnClk = e-> coursesSwitch();
         EventHandler<ActionEvent> HomeClicked = e-> HomeSwitch();
         EventHandler<ActionEvent> StudentsClicked = e-> StudentsSwitch();
         EventHandler<ActionEvent> TeachersClicked = e-> TeachersSwitch();
         EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
 
+        //connecting buttons to the specific actions we want taken when button is pressed
         this.view.CoursesBtn.setOnAction(CoursesBtnClk);
         this.view.HomeBtn.setOnAction(HomeClicked);
         this.view.StudentsBtn.setOnAction(StudentsClicked);
@@ -38,6 +44,7 @@ public class Controller {
         this.view.SelectBtn.setOnAction(InfoChosen);
     }
 
+    //method to call method based on current screen to show specific information
     private void InfoSwitch() {
         this.view.DisplayInfo.clear();
         switch (CurrentScreen){
@@ -55,7 +62,7 @@ public class Controller {
 
 
 
-
+    //this function sets information into the dropdown menu(comboBox) when called depending on screen
     public void setInfo(String type){
         this.view.Info.getItems().clear();
         switch (type){
@@ -71,6 +78,7 @@ public class Controller {
         }
     }
 
+    //initializes logic for courses screen
     public void coursesSwitch(){
         CurrentScreen = "Courses";
         this.view.DisplayInfo.clear();
@@ -84,6 +92,7 @@ public class Controller {
         setInfo(CurrentScreen);
     }
 
+    //initializes logic for main screen
     public void HomeSwitch(){
         CurrentScreen = "Main";
         this.view.DisplayInfo.clear();
@@ -96,6 +105,7 @@ public class Controller {
         this.view.SelectBtn.setVisible(false);
     }
 
+    //initializes logic for students screen
     public void StudentsSwitch(){
         CurrentScreen = "Students";
         this.view.DisplayInfo.clear();
@@ -109,6 +119,7 @@ public class Controller {
         setInfo(CurrentScreen);
     }
 
+    //initializes logic for Teachers screen
     public void TeachersSwitch(){
         CurrentScreen = "Teachers";
         this.view.DisplayInfo.clear();
@@ -122,24 +133,27 @@ public class Controller {
         setInfo(CurrentScreen);
     }
 
+    //method to return all students used for setInfo
     public void getStudents(){
         for (String s:this.model.getNamesWithOccupation("Student")) {
             this.view.Info.getItems().add(s);
         }
     }
-
+    //method to return all Teachers used for setInfo
     public void getTeachers(){
         for (String s: this.model.getNamesWithOccupation("Professor")){
             this.view.Info.getItems().add(s);
         }
     }
-
+    //method to return all courses used for setInfo
     public void getCourses(){
         for (String s: this.model.getCourseName()){
             this.view.Info.getItems().add(s);
         }
     }
 
+    //the following methods format information retrieved by the database class for a specific student
+    //they also handle checking overbookings
     private void getStudentInfo() {
         String Student = this.view.Info.getValue();
         ArrayList<String> Courses = this.model.getRegCourseIDsWithPeopleID(this.model.getIDUsingName(Student));
@@ -198,10 +212,11 @@ public class Controller {
            Warning = "\n\n\n---<OVER STUDENT CAPACITY>----\n\n";
        }
 
-        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+ teachers +"\nEnrolled Students:\n----------\n" + students + Warning + "\nLocated in Room #"+ this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(2)+ "\n" + info;
+        String toDisplay = "Course Name: " + Course + "\n"+ time(this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(1)) + "\nAssigned Teacher(s):"+ teachers +"\nEnrolled Students:\n----------\n" + students + "\nLocated in Room #"+ this.model.getAllCourseStuffWithID(this.model.getCourseIDWithName(Course).get(0)).get(2) + Warning+ "\n" + info;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
+    //simple function to set a block to be represented by a much nicer string
     public String time(String Block){
         String tid = "";
         if(Block.contains("A"))return  "Monday 8-12 and Tuesday 12-16";
