@@ -438,4 +438,26 @@ public class Database {
         return result;
     }
 
+    public ArrayList<String> getOccupationWithID(String peopleID)
+    {
+        ArrayList<String> result = new ArrayList<String>();
+        try
+        {
+            ResultSet rs = query("Select Occupation From People where ID ='" + peopleID + "';");
+            while(rs.next())
+            {
+                String courseIDs = rs.getString("Occupation");
+                result.add(courseIDs);
+                System.out.println(courseIDs);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            endConnection();
+        }
+        return result;
+    }
 }
