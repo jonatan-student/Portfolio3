@@ -5,6 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+
 
 import java.util.ArrayList;
 
@@ -25,13 +29,30 @@ public class Controller {
         EventHandler<ActionEvent> HomeClicked = e-> HomeSwitch();
         EventHandler<ActionEvent> StudentsClicked = e-> StudentsSwitch();
         EventHandler<ActionEvent> TeachersClicked = e-> TeachersSwitch();
-       // EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
+       EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
 
         this.view.CoursesBtn.setOnAction(CoursesBtnClk);
         this.view.HomeBtn.setOnAction(HomeClicked);
         this.view.StudentsBtn.setOnAction(StudentsClicked);
         this.view.TeachersBtn.setOnAction(TeachersClicked);
     }
+
+    private void InfoSwitch() {
+        this.view.DisplayInfo.clear();
+        switch (CurrentScreen){
+            case "Students":
+                getStudentInfo();
+                break;
+            case "Teachers":
+                //getTeacherInfo();
+                break;
+            case "Courses":
+                //getCourseInfo();
+                break;
+        }
+    }
+
+
 
 
     public void setInfo(String type){
@@ -50,7 +71,7 @@ public class Controller {
     }
 
     public void coursesSwitch(){
-        CurrentScreen = "courses";
+        CurrentScreen = "Courses";
         this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
         this.view.DisplayInfo.setVisible(true);
@@ -95,7 +116,6 @@ public class Controller {
         this.view.CoursesBtn.setVisible(false);
         this.view.Info.setVisible(true);
         setInfo(CurrentScreen);
-        this.view.DisplayInfo.appendText("All Teachers \n----------");
     }
 
     public void getStudents(){
@@ -114,5 +134,27 @@ public class Controller {
         for (String s: this.model.getCourseName()){
             this.view.Info.getItems().add(s);
         }
+    }
+
+    private void getStudentInfo() {
+        String Student = this.view.Info.getValue();
+
+
+        String toDisplay = "Student Name: " + Student;
+        this.view.DisplayInfo.appendText(toDisplay);
+    }
+
+    private void getTeacherInfo(){
+        String Teacher = this.view.Info.getValue();
+
+        String toDisplay = "Teacher Name: " + Teacher;
+        this.view.DisplayInfo.appendText(toDisplay);
+    }
+
+    private void getCourseInfo(){
+        String Course = this.view.Info.getValue();
+
+        String toDisplay = "Course Name: " + Course + ;
+        this.view.DisplayInfo.appendText(toDisplay);
     }
 }
