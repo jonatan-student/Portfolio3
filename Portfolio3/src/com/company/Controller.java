@@ -29,12 +29,13 @@ public class Controller {
         EventHandler<ActionEvent> HomeClicked = e-> HomeSwitch();
         EventHandler<ActionEvent> StudentsClicked = e-> StudentsSwitch();
         EventHandler<ActionEvent> TeachersClicked = e-> TeachersSwitch();
-       EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
+        EventHandler<ActionEvent> InfoChosen = e-> InfoSwitch();
 
         this.view.CoursesBtn.setOnAction(CoursesBtnClk);
         this.view.HomeBtn.setOnAction(HomeClicked);
         this.view.StudentsBtn.setOnAction(StudentsClicked);
         this.view.TeachersBtn.setOnAction(TeachersClicked);
+        this.view.SelectBtn.setOnAction(InfoChosen);
     }
 
     private void InfoSwitch() {
@@ -79,6 +80,7 @@ public class Controller {
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
         this.view.Info.setVisible(true);
+        this.view.SelectBtn.setVisible(true);
         setInfo(CurrentScreen);
     }
 
@@ -91,7 +93,7 @@ public class Controller {
         this.view.StudentsBtn.setVisible(true);
         this.view.TeachersBtn.setVisible(true);
         this.view.CoursesBtn.setVisible(true);
-
+        this.view.SelectBtn.setVisible(false);
     }
 
     public void StudentsSwitch(){
@@ -103,6 +105,7 @@ public class Controller {
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
         this.view.Info.setVisible(true);
+        this.view.SelectBtn.setVisible(true);
         setInfo(CurrentScreen);
     }
 
@@ -114,6 +117,7 @@ public class Controller {
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
+        this.view.SelectBtn.setVisible(true);
         this.view.Info.setVisible(true);
         setInfo(CurrentScreen);
     }
@@ -137,10 +141,14 @@ public class Controller {
     }
 
     private void getStudentInfo() {
+
         String Student = this.view.Info.getValue();
-
-
-        String toDisplay = "Student Name: " + Student;
+        ArrayList<String> Courses = this.model.getRegCourseIDsWithPeopleID(this.model.getIDUsingName(Student));
+        String courses = "";
+        for (String s: Courses) {
+            courses += "--> " + s + "\n";
+        }
+        String toDisplay = "Student Name: " + Student + "\n Current Courses: \n" + courses;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
@@ -154,7 +162,7 @@ public class Controller {
     private void getCourseInfo(){
         String Course = this.view.Info.getValue();
 
-        String toDisplay = "Course Name: " + Course + ;
+        String toDisplay = "Course Name: " + Course;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 }

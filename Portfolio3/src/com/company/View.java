@@ -26,6 +26,7 @@ public class View {
     Button CoursesBtn = new Button("Courses");
     Button TeachersBtn = new Button("Teachers");
     Button StudentsBtn = new Button("Students");
+    Button SelectBtn = new Button("Select");
 
     TextArea DisplayInfo = new TextArea();
     ComboBox<String> Info = new ComboBox<>();
@@ -36,6 +37,7 @@ public class View {
         HomeBtn.setVisible(false);
         DisplayInfo.setVisible(false);
         Info.setVisible(false);
+        SelectBtn.setVisible(false);
         Create();
     }
 
@@ -53,6 +55,7 @@ public class View {
         StudentsBtn.setFont(font);
 
         HomeBtn.relocate(22.5,22.5);
+        SelectBtn.relocate(400, 22.5);
 
         Info.relocate(100, 22.5);
         Info.setMaxSize(200,500);
@@ -69,6 +72,7 @@ public class View {
 
 
         this.view.getChildren().add(HomeBtn);
+        this.view.getChildren().add(SelectBtn);
 
 
         this.view.getChildren().add(DisplayInfo);
