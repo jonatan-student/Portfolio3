@@ -407,4 +407,35 @@ public class Database {
 
     }
 
+    public ArrayList<String> getAllCourseStuffWithID(String courseID)
+    {
+        ArrayList<String> result = new ArrayList<String>();
+        try
+        {
+            ResultSet rs = query("Select Course_Name,Day_Time,Rooms,Max_Students,Info From Courses where Course_ID ='" + courseID + "';");
+            while(rs.next())
+            {
+                String courseName = rs.getString("Course_Name");
+                result.add(courseName);
+                String dayTime = rs.getString("Day_Time");
+                result.add(dayTime);
+                String rooms = rs.getString("Rooms");
+                result.add(rooms);
+                String maxStudents = rs.getString("Max_Students");
+                result.add(maxStudents);
+                String info = rs.getString("Info");
+                result.add(info);
+                System.out.println(result);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            endConnection();
+        }
+        return result;
+    }
+
 }
