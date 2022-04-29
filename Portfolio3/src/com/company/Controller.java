@@ -182,18 +182,18 @@ public class Controller {
         String Course = this.view.Info.getValue();
         String students = "";
         String teachers = "";
-        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(Course);
+        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.);
+        ArrayList<String> Course = this.model.getAllCourseStuffWithID(this.model.);
 
         for (String s: People) {
-            if(this.model.getOccupationWithID(s) == "Professor"){
+            if(this.model.getOccupationWithID(s).contains("Professor")){
                 teachers += this.model.getNameWithID(s);
-            } else if (this.model.getOccupationWithID(s) == "Student"){
+            } else if (this.model.getOccupationWithID(s).contains("Student")){
                 students += this.model.getNameWithID(s);
             }
-
         }
 
-        String toDisplay = "Course Name: " + Course + "\n Enrolled Students" + students;
+        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+teachers+"\nEnrolled Students\n" + students;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
