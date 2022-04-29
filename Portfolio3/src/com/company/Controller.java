@@ -142,24 +142,6 @@ public class Controller {
     }
 
     private void getStudentInfo() {
-        String Teacher = this.view.Info.getValue();
-        ArrayList<String> Courses = this.model.getRegCourseIDsWithPeopleID(this.model.getIDUsingName(Teacher));
-        ArrayList<String> Schedule = new ArrayList<>();
-        String courses = "";
-        String Warning = "";
-        for (String s: Courses) {
-            courses += "--> " + this.model.getAllCourseStuffWithID(s).get(0) + "---" + time(this.model.getAllCourseStuffWithID(s).get(1));
-            courses += "\nRoom #" + this.model.getAllCourseStuffWithID(s).get(2) + "\n";
-            if(Schedule.contains(this.model.getAllCourseStuffWithID(s).get(1))){
-                Warning = "\n\n\n---<OVERBOOKING DETECTED>----\n\n";
-            }
-            Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
-        }
-        String toDisplay = "Teacher Name: " + Teacher + "\nCurrent Courses: \n" + courses + Warning;
-        this.view.DisplayInfo.appendText(toDisplay);
-    }
-
-    private void getTeacherInfo() {
         String Student = this.view.Info.getValue();
         ArrayList<String> Courses = this.model.getRegCourseIDsWithPeopleID(this.model.getIDUsingName(Student));
         ArrayList<String> Schedule = new ArrayList<>();
@@ -174,6 +156,24 @@ public class Controller {
             Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
         }
         String toDisplay = "Student Name: " + Student + "\nCurrent Courses: \n" + courses + Warning;
+        this.view.DisplayInfo.appendText(toDisplay);
+    }
+
+    private void getTeacherInfo() {
+        String Teacher = this.view.Info.getValue();
+        ArrayList<String> Courses = this.model.getRegCourseIDsWithPeopleID(this.model.getIDUsingName(Teacher));
+        ArrayList<String> Schedule = new ArrayList<>();
+        String courses = "";
+        String Warning = "";
+        for (String s: Courses) {
+            courses += "--> " + this.model.getAllCourseStuffWithID(s).get(0) + "---" + time(this.model.getAllCourseStuffWithID(s).get(1));
+            courses += "\nRoom #" + this.model.getAllCourseStuffWithID(s).get(2) + "\n";
+            if(Schedule.contains(this.model.getAllCourseStuffWithID(s).get(1))){
+                Warning = "\n\n\n---<OVERBOOKING DETECTED>----\n\n";
+            }
+            Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
+        }
+        String toDisplay = "Student Name: " + Teacher + "\nCurrent Courses: \n" + courses + Warning;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 

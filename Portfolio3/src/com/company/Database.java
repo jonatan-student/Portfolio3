@@ -460,4 +460,28 @@ public class Database {
         }
         return result;
     }
+
+    public ArrayList<String> getCourseIDWithName(String courseName)
+    {
+        ArrayList<String> result = new ArrayList<String>();
+        try
+        {
+            ResultSet rs = query("Select Course_ID From Courses where Course_Name ='" + courseName + "';");
+            while(rs.next())
+            {
+                String courseIDs = rs.getString("Course_ID");
+                result.add(courseIDs);
+                System.out.println(courseIDs);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            endConnection();
+        }
+        return result;
+    }
+
 }
