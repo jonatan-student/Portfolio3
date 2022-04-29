@@ -28,7 +28,7 @@ public class View {
     Button StudentsBtn = new Button("Students");
 
     TextArea DisplayInfo = new TextArea();
-    ComboBox<ObservableList> Info = new ComboBox<>();
+    ComboBox<String> Info = new ComboBox<>();
 
 
     public View(Controller control){

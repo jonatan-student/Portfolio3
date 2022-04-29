@@ -19,7 +19,7 @@ public class Controller {
 
     public void setView(View view) {
         this.view = view;
-        CurrentScreen = "main";
+        CurrentScreen = "Main";
 
         EventHandler<ActionEvent> CoursesBtnClk = e-> coursesSwitch();
         EventHandler<ActionEvent> HomeClicked = e-> HomeSwitch();
@@ -35,27 +35,34 @@ public class Controller {
 
 
     public void setInfo(String type){
+        this.view.Info.getItems().clear();
         switch (type){
             case "Students":
-                this.view.Info.getItems().addAll(getStudents());
+                getStudents();
                 break;
             case "Teachers":
-                this.view.Info.getItems().add(getTeachers());
+                getTeachers();
+                break;
+            case "Courses":
+                getCourses();
                 break;
         }
     }
 
     public void coursesSwitch(){
+        CurrentScreen = "courses";
         this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
         this.view.DisplayInfo.setVisible(true);
         this.view.StudentsBtn.setVisible(false);
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
-
+        this.view.Info.setVisible(true);
+        setInfo(CurrentScreen);
     }
 
     public void HomeSwitch(){
+        CurrentScreen = "Main";
         this.view.DisplayInfo.clear();
         this.view.Info.setVisible(false);
         this.view.HomeBtn.setVisible(false);
@@ -79,6 +86,7 @@ public class Controller {
     }
 
     public void TeachersSwitch(){
+        CurrentScreen = "Teachers";
         this.view.DisplayInfo.clear();
         this.view.HomeBtn.setVisible(true);
         this.view.DisplayInfo.setVisible(true);
@@ -86,18 +94,25 @@ public class Controller {
         this.view.TeachersBtn.setVisible(false);
         this.view.CoursesBtn.setVisible(false);
         this.view.Info.setVisible(true);
+        setInfo(CurrentScreen);
         this.view.DisplayInfo.appendText("All Teachers \n----------");
     }
 
-    public ObservableList<String> getStudents(){
-        return FXCollections.observableArrayList(this.model.getNames());
+    public void getStudents(){
+        for (String s:this.model.getNamesWithOccupation("Student")) {
+            this.view.Info.getItems().add(s);
+        }
     }
 
-    public ObservableList<String> getTeachers(){
-        return null;
+    public void getTeachers(){
+        for (String s: this.model.getNamesWithOccupation("Professor")){
+            this.view.Info.getItems().add(s);
+        }
     }
 
-    public ObservableList<String> getCourses(){
-        return null;
+    public void getCourses(){
+        for (String s: this.model.getCourseName()){
+            this.view.Info.getItems().add(s);
+        }
     }
 }
