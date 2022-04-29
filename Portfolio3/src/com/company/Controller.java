@@ -46,7 +46,7 @@ public class Controller {
                 getStudentInfo();
                 break;
             case "Teachers":
-                //getTeacherInfo();
+                getTeacherInfo();
                 break;
             case "Courses":
                 //getCourseInfo();
@@ -173,29 +173,29 @@ public class Controller {
             }
             Schedule.add(this.model.getAllCourseStuffWithID(s).get(1));
         }
-        String toDisplay = "Student Name: " + Teacher + "\nCurrent Courses: \n" + courses + Warning;
+        String toDisplay = "Teacher Name: " + Teacher + "\nIs Teaching Course(s): \n" + courses + Warning;
         this.view.DisplayInfo.appendText(toDisplay);
     }
 
 
-    private void getCourseInfo(){
-        String Course = this.view.Info.getValue();
-        String students = "";
-        String teachers = "";
-        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.);
-        ArrayList<String> Course = this.model.getAllCourseStuffWithID(this.model.);
-
-        for (String s: People) {
-            if(this.model.getOccupationWithID(s).contains("Professor")){
-                teachers += this.model.getNameWithID(s);
-            } else if (this.model.getOccupationWithID(s).contains("Student")){
-                students += this.model.getNameWithID(s);
-            }
-        }
-
-        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+teachers+"\nEnrolled Students\n" + students;
-        this.view.DisplayInfo.appendText(toDisplay);
-    }
+//    private void getCourseInfo(){
+//        String Course = this.view.Info.getValue();
+//        String students = "";
+//        String teachers = "";
+//        ArrayList<String> People = this.model.getRegPeopleIDsWithCourseID(this.model.);
+//        ArrayList<String> Course = this.model.getAllCourseStuffWithID(this.model.);
+//
+//        for (String s: People) {
+//            if(this.model.getOccupationWithID(s).contains("Professor")){
+//                teachers += this.model.getNameWithID(s);
+//            } else if (this.model.getOccupationWithID(s).contains("Student")){
+//                students += this.model.getNameWithID(s);
+//            }
+//        }
+//
+//        String toDisplay = "Course Name: " + Course + "\nAssigned Teacher(s):"+teachers+"\nEnrolled Students\n" + students;
+//        this.view.DisplayInfo.appendText(toDisplay);
+//    }
 
     public String time(String Block){
         String tid = "";
