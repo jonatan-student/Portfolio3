@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Controller {
     public View view;
     public String CurrentScreen;
+    public ObservableList<String> info;
 
     public Controller(){}
 
@@ -30,7 +31,7 @@ public class Controller {
     }
 
     private void InfoSwitch() {
-        ObservableList<String> info;
+
         if(CurrentScreen.contains("Students")){
             info = getStudents();
         } else if (CurrentScreen.contains("Teachers")){
@@ -42,7 +43,10 @@ public class Controller {
     }
 
     private void setInfo(String type){
-
+        switch (type){
+            case "Students":
+                info = getStudents();
+        }
     }
 
     public void coursesSwitch(){
