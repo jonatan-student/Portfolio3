@@ -1,9 +1,11 @@
 package com.company;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -26,14 +28,14 @@ public class View {
     Button StudentsBtn = new Button("Students");
 
     TextArea DisplayInfo = new TextArea();
-    ArrayList<Button> InfoButtons = new ArrayList<>();
+    ComboBox<ObservableList> Info = new ComboBox<>();
 
 
     public View(Controller control){
         this.controller = control;
         HomeBtn.setVisible(false);
         DisplayInfo.setVisible(false);
-
+        Info.setVisible(false);
         Create();
     }
 
@@ -51,6 +53,7 @@ public class View {
         StudentsBtn.setFont(font);
 
         HomeBtn.relocate(22.5,22.5);
+        Info.relocate(50, 22.5);
         DisplayInfo.relocate(20,50);
         DisplayInfo.setEditable(false);
         DisplayInfo.setMinSize(710,410);
@@ -58,6 +61,7 @@ public class View {
         this.view.getChildren().add(CoursesBtn);
         this.view.getChildren().add(TeachersBtn);
         this.view.getChildren().add(StudentsBtn);
+        this.view.getChildren().add(Info);
 
 
         this.view.getChildren().add(HomeBtn);
